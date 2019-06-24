@@ -1,5 +1,17 @@
-<app-search-input></app-search-input>
-<section class="card-container" *ngFor="let item of trackingItems; let i=index">
-  <mat-icon class="card-container-icon" [class.active]="item.status" >check_circle</mat-icon>
-  <app-card-detail  [values]="item"></app-card-detail>
-</section>
+<app-search-input [formControl]="inputSearch" [customWidth]="'300'" ></app-search-input>
+<ng-container *ngIf="(trackList$ | async) as trackingItems; else loadingMessage">
+  <section class="card-container" *ngFor="let item of trackingItems; let i=index">
+    <mat-icon class="card-container-icon" [class.active]="item.status" >check_circle</mat-icon>
+    <app-card-detail  [values]="item"></app-card-detail>
+  </section>
+
+</ng-container>
+<ng-template #loadingMessage>
+<h2>Cargando :D</h2>
+</ng-template>
+
+<div class="fab-container">
+    <button mat-fab class="fab-toggler">
+      <i class="material-icons">add</i>
+    </button>
+  </div>

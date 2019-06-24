@@ -4,5 +4,5 @@ export interface ITrackingInfo {
     arrival: string;
     price: number;
     amount: number;
-    status?: boolean 
+    status?: boolean; 
 }; 

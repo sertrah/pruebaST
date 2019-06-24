@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseControlValueAccessor } from '../BaseControlValueAccessor';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'toggle-filter',
@@ -15,6 +16,12 @@ import { BaseControlValueAccessor } from '../BaseControlValueAccessor';
   ]
 })
 export class ToggleFilterComponent extends BaseControlValueAccessor<boolean> {
- @Input() image: string;
+  imgFormated: string
+  @Input() set image(img){
+    this.imgFormated=  `../assets/${img}.png`;
+ };
 
+ toggle(event: MatSlideToggleChange){
+  this.onChange(event.checked);
+ }
 }

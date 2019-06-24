@@ -1,7 +1,7 @@
 <div class="card">
   <div class="grid-container">
     <p>
-      {{ date | date: 'EEEE dd h:mm a' }}
+      {{ trackingInfo.date | date: 'EEEE dd h:mm a' }}
     </p>
     <div class="location-container">
       <div>
@@ -12,7 +12,7 @@
       <div>
         {{ trackingInfo.departure }}
         <mat-icon class="location-container-icon">keyboard_arrow_down</mat-icon>
-        Atlanta, GA, 30123
+        {{trackingInfo.arrival}}
       </div>
     </div>
   </div>
@@ -22,12 +22,12 @@
         >local_shipping</mat-icon
       >
       <p>
-        {{  250 | currency:'USD'}}
+        {{  trackingInfo.price | currency:'USD'}}
       </p>
     </div>
     <div class="actions-container">
       <div class="unkowwhatits">
-        1
+        {{ trackingInfo.amount }}
       </div>
       <mat-menu #appMenu="matMenu">
         <button mat-menu-item>Settings</button>

@@ -8,9 +8,9 @@
             <span>Smart Filters</span>
         </div>
         <form class="smart-filters-container" [formGroup]="nestedForm">
-            <toggle-filter formControlName="sale"></toggle-filter>
-            <toggle-filter formControlName="date"></toggle-filter>
-            <toggle-filter formControlName="favorite"></toggle-filter>
+            <toggle-filter image="sale" formControlName="favorite"></toggle-filter>
+            <toggle-filter image="date" formControlName="date"></toggle-filter>
+            <toggle-filter image="status" formControlName="status"></toggle-filter>
         </form>
         <p>Status</p>
         <app-search-input></app-search-input>
