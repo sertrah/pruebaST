@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="grid-container">
+    <p>
+      {{ date | date: 'EEEE dd h:mm a' }}
+    </p>
+    <div class="location-container">
+      <div>
+        <mat-icon aria-hidden="false" class="material-icons-outlined" aria-label="tracking info"
+          >near_me_outline</mat-icon
+        >
+      </div>
+      <div>
+        {{ trackingInfo.departure }}
+        <mat-icon class="location-container-icon">keyboard_arrow_down</mat-icon>
+        Atlanta, GA, 30123
+      </div>
+    </div>
+  </div>
+  <div class="grid-container">
+    <div class="price-container">
+      <mat-icon class="price-container-icon"
+        >local_shipping</mat-icon
+      >
+      <p>
+        {{  250 | currency:'USD'}}
+      </p>
+    </div>
+    <div class="actions-container">
+      <div class="unkowwhatits">
+        1
+      </div>
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item>Help</button>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

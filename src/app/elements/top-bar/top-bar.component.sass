@@ -1,0 +1,32 @@
+.tab
+  overflow: hidden
+  border: 1px solid #ccc
+  background-color: #f1f1f1
+  display: grid
+  align-items: center
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr))
+  align-items: stretch
+  justify-items: stretch
+  align-content: stretch
+  justify-content: stretch
+  margin-top: 40px
+  
+  button
+    background-color: inherit
+    float: left
+    border: none
+    outline: none
+    cursor: pointer
+    padding: 1px 15px
+    transition: 0.3s
+    font-size: 17px
+    &:hover
+      background-color: #ddd
+    &.active
+      background-color: #193948
+      color: #fff
+      .tablinks-icon
+        color: #fff
+    .tablinks-icon
+      display: block;
+      margin: 0 auto;
