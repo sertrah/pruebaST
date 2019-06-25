@@ -1,11 +1,12 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { ITrackingInfo } from 'src/app/elements/card-detail/ItrackingInfo';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ITrackingInfo } from '../../elements/card-detail/ItrackingInfo';
 import { Store } from '@ngrx/store';
-import { insertList, filter, smartFilter } from 'src/app/reducers';
+import { insertList, filter, addNewItem } from '../../reducers';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, debounceTime, map, takeUntil } from 'rxjs/operators';
-import { TakeUntilComponent } from 'src/app/elements/takeUntil';
+import { distinctUntilChanged, debounceTime, map, takeUntil, tap } from 'rxjs/operators';
+import { TakeUntilComponent } from '../../elements/takeUntil';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,17 @@ import { TakeUntilComponent } from 'src/app/elements/takeUntil';
   styleUrls: ['./home.component.sass']
 })
 @TakeUntilComponent
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {}
 
   trackList$: Observable<ITrackingInfo[]>;
   inputSearch: FormControl = new FormControl("");
   spiaDestroyed;
+
+  tamanoDatos = 0;
+  tamanoPagina = 4;
+  opcionesPaginacion = [4, 25, 50, 100];
+  indexPagina = 0;
 
   trackingItems: ITrackingInfo[] = [
     {date: new Date(), departure: "Housiton, TX, 33619", arrival: "Atlanta, GA, 40123", price: 250, amount: 2, status: true },
@@ -28,7 +35,10 @@ export class HomeComponent implements OnInit {
   constructor(private store: Store<any>) { }
 
   ngOnInit() {
-    this.trackList$ = this.store.select("reducer","trackingInfo");
+    this.trackList$ = this.store.select("reducer","trackingInfo").pipe(tap((x)=> { 
+      x && this.actualizarDatosPorPagina();
+      x && (this.tamanoDatos = x.length); }));
+    
     this.inputSearch.valueChanges
     .pipe(
       debounceTime(600),
@@ -41,8 +51,25 @@ export class HomeComponent implements OnInit {
     });
     setTimeout(() => {
       this.store.dispatch({type: insertList, payload: this.trackingItems});
-      
     }, 1500);
   }
 
+  addNewItem(){
+    var a : ITrackingInfo = {date: new Date(), departure: "NEW, TX, 33619", arrival: "NEW, GA, 40123", price: 150, amount: 1, status: false};
+    this.store.dispatch({type: addNewItem, payload: a});
+    alert("New registration added, there is no budget for luxuries (╥_╥)");
+  }
+
+  cambiarPagina($event: PageEvent) {
+    this.tamanoPagina = $event.pageSize;
+    this.indexPagina = $event.pageIndex;
+    this.actualizarDatosPorPagina();
+  }
+
+  actualizarDatosPorPagina() {
+    // TODO: Pasar al storage
+    const offset = this.indexPagina * this.tamanoPagina;
+    this.trackingItems = this.trackingItems
+      .slice(offset, offset + this.trackingItems.length);
+  }
 }

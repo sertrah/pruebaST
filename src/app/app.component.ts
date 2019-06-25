@@ -1,23 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { smartFilter } from './reducers';
+import { TakeUntilComponent } from './elements/takeUntil';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent  implements OnInit{
+@TakeUntilComponent
+export class AppComponent  implements OnInit, OnDestroy{
+  ngOnDestroy(): void {}
+  spiaDestroyed;
+
   ngOnInit(): void {
-    this.nestedForm.valueChanges.subscribe((x)=> {
+    this.nestedForm.valueChanges
+    .pipe(takeUntil(this.spiaDestroyed()))
+    .subscribe((x)=> {
       this.validateFilterChanged(x);
     });
-
-    this.store.select('reducer').subscribe(console.log);
   }
-  stateFilter;
-  title = 'pruebaST';
   constructor(private store: Store<any>){
   }
   nestedForm: FormGroup = new FormGroup({
@@ -28,9 +32,7 @@ export class AppComponent  implements OnInit{
   
   validateFilterChanged(d){
     let v = {};
-    const a = Object.keys(d).map((key) => d[key] && key).map(x => x && (v[x] = true));
-    console.log(v);
+    Object.keys(d).map((key) => d[key] && key).map(x => x && (v[x] = true));
     this.store.dispatch({type: smartFilter, payload: v });
-    this.stateFilter = d;
   }
 }

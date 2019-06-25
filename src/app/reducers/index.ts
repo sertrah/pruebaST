@@ -4,6 +4,7 @@ export const filter = '@harlen/filter';
 export const smartFilter = '@harlen/smartFilter';
 export const reset = '@harlen/reset';
 export const insertList = '@harlen/insertList';
+export const addNewItem = '@harlen/addNewItem';
 
 const initialState = {
   trackingInfo: null,
@@ -27,6 +28,8 @@ export function reducer(
       return Object.assign({}, state, { trackingInfo: state.tempTrackingInfo });
     case insertList:
       return Object.assign({}, state, { trackingInfo: payload }, { tempTrackingInfo: payload });
+    case addNewItem:
+          return Object.assign({}, state, { trackingInfo: [payload, ...state.trackingInfo] }, { tempTrackingInfo: [payload, ...state.tempTrackingInfo] });
     default:
       return state;
   }

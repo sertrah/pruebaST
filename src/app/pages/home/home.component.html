@@ -1,9 +1,15 @@
 <app-search-input [formControl]="inputSearch" [customWidth]="'300'" ></app-search-input>
-<ng-container *ngIf="(trackList$ | async) as trackingItems; else loadingMessage">
-  <section class="card-container" *ngFor="let item of trackingItems; let i=index">
+<ng-container *ngIf="(trackList$ | async) as listItemTrackings; else loadingMessage">
+  <section class="card-container" *ngFor="let item of listItemTrackings; let i=index">
     <mat-icon class="card-container-icon" [class.active]="item.status" >check_circle</mat-icon>
     <app-card-detail  [values]="item"></app-card-detail>
   </section>
+  <mat-paginator [length]="4"
+  [pageSize]="tamanoPagina"
+  [pageSizeOptions]="opcionesPaginacion"
+  (page)="cambiarPagina($event)"
+  >
+  </mat-paginator>
 
 </ng-container>
 <ng-template #loadingMessage>
@@ -11,7 +17,7 @@
 </ng-template>
 
 <div class="fab-container">
-    <button mat-fab class="fab-toggler">
+    <button (click)="addNewItem()" mat-fab class="fab-toggler">
       <i class="material-icons">add</i>
     </button>
   </div>

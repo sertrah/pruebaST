@@ -8,12 +8,12 @@ export function TakeUntilComponent(constructor: any) {
     }
 
     constructor.prototype.spiaDestroyed = function () {
-        this._takeUntilDestroy$ = this._takeUntilDestroy$ || new Subject();
-        return this._takeUntilDestroy$.asObservable();
+        this.TakeUntilComponent$ = this.TakeUntilComponent$ || new Subject();
+        return this.TakeUntilComponent$.asObservable();
     };
 
     constructor.prototype.ngOnDestroy = function () {
         mainDestroyReference && typeof mainDestroyReference === 'function' && mainDestroyReference.apply(this, arguments);
-        this._takeUntilDestroy$ && this._takeUntilDestroy$.next() && this._takeUntilDestroy$.complete();
+        this.TakeUntilComponent$ && this.TakeUntilComponent$.next() && this.TakeUntilComponent$.complete();
     };
 }
