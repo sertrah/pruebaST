@@ -10,7 +10,7 @@ export class CardDetailComponent implements OnInit {
   date = new Date();
   trackingInfo: ITrackingInfo;
   @Input() set values(val: ITrackingInfo){
-    this.trackingInfo= val;
+    this.trackingInfo = val;
   }
   constructor() { }
 

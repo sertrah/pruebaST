@@ -22,7 +22,7 @@ export function reducer(
       });
     case smartFilter:
           return Object.assign({}, state, {
-            trackingInfo: filterList(searchByAttribute, state.tempTrackingInfo, payload ) 
+            trackingInfo: filterList(searchByAttribute, state.tempTrackingInfo, payload )
           });
     case reset:
       return Object.assign({}, state, { trackingInfo: state.tempTrackingInfo });
@@ -39,18 +39,18 @@ function filterList(callback, ...args): ITrackingInfo[] {
   return  callback.apply(this, args);
 }
 
-function searchByAttribute(tempTrackingList:ITrackingInfo[], attribute: string): ITrackingInfo[] {
-  
-  return  Object.entries(attribute).length === 0 ? 
-  tempTrackingList:
+function searchByAttribute(tempTrackingList: ITrackingInfo[], attribute: string): ITrackingInfo[] {
+
+  return  Object.entries(attribute).length === 0 ?
+  tempTrackingList :
   tempTrackingList.filter(search, attribute);
 }
 
 function search(tempTracking){
   return Object.keys(this).every((key) => {
-    return key === "date" ? tempTracking["date"].getDate() === new Date().getDate() : tempTracking[key] === this[key] });
+    return key === 'date' ? tempTracking['date'].getDate() === new Date().getDate() : tempTracking[key] === this[key]; });
 }
-function searchByValue(tempTrackingList:ITrackingInfo[], filterValue: any): ITrackingInfo[] {
+function searchByValue(tempTrackingList: ITrackingInfo[], filterValue: any): ITrackingInfo[] {
   return tempTrackingList.filter( x =>
     (x.departure
       ? x.departure.toLowerCase().indexOf(filterValue) !== -1

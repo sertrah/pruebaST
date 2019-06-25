@@ -23,5 +23,5 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SearchInputComponent extends BaseControlValueAccessor<string>{
-  @Input() customWidth = "160";
+  @Input() customWidth = '160';
 }

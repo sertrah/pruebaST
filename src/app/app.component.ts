@@ -18,7 +18,7 @@ export class AppComponent  implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.nestedForm.valueChanges
     .pipe(takeUntil(this.spiaDestroyed()))
-    .subscribe((x)=> {
+    .subscribe((x) => {
       this.validateFilterChanged(x);
     });
   }
@@ -29,9 +29,9 @@ export class AppComponent  implements OnInit, OnDestroy{
     status: new FormControl(false),
     favorite: new FormControl(false),
   });
-  
+
   validateFilterChanged(d){
-    let v = {};
+    const v = {};
     Object.keys(d).map((key) => d[key] && key).map(x => x && (v[x] = true));
     this.store.dispatch({type: smartFilter, payload: v });
   }

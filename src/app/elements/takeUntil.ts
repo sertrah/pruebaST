@@ -1,7 +1,7 @@
 import { Subject } from 'rxjs';
 
 export function TakeUntilComponent(constructor: any) {
-    let mainDestroyReference = constructor.prototype.ngOnDestroy;
+    const mainDestroyReference = constructor.prototype.ngOnDestroy;
 
     if (typeof mainDestroyReference !== 'function') {
         console.warn(`${constructor.name} Esta usando @TakeUntilComponent pero no esta implementado OnDestroy`);

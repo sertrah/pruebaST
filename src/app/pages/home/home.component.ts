@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   trackList$: Observable<ITrackingInfo[]>;
-  inputSearch: FormControl = new FormControl("");
+  inputSearch: FormControl = new FormControl('');
   spiaDestroyed;
 
   tamanoDatos = 0;
@@ -27,24 +27,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   indexPagina = 0;
 
   trackingItems: ITrackingInfo[] = [
-    {date: new Date(), departure: "Housiton, TX, 33619", arrival: "Atlanta, GA, 40123", price: 250, amount: 2, status: true },
-    {date: new Date(new Date().getDate() +1 ), departure: "Housiton, TX, 32619", arrival: "Harlem, GA, 30123", price: 10, amount: 3, status: false },
-    {date: new Date(2019, 5, 2), departure: "Harlem, TX, 33619", arrival: "Atlanta, GA, 10123", price: 2, amount: 1, status: false },
-    {date: new Date(2019, 4, 8), departure: "Housiton, TX, 33619", arrival: "Atlanta, GA, 30123", price: 30, amount: 4, status: true },
+    {date: new Date(), departure: 'Housiton, TX, 33619', arrival: 'Atlanta, GA, 40123', price: 250, amount: 2, status: true },
+    {date: new Date(new Date().getDate() + 1 ), departure: 'Housiton, TX, 32619', arrival: 'Harlem, GA, 30123', price: 10, amount: 3, status: false },
+    {date: new Date(2019, 5, 2), departure: 'Harlem, TX, 33619', arrival: 'Atlanta, GA, 10123', price: 2, amount: 1, status: false },
+    {date: new Date(2019, 4, 8), departure: 'Housiton, TX, 33619', arrival: 'Atlanta, GA, 30123', price: 30, amount: 4, status: true },
   ];
   constructor(private store: Store<any>) { }
 
   ngOnInit() {
-    this.trackList$ = this.store.select("reducer","trackingInfo").pipe(tap((x)=> { 
+    this.trackList$ = this.store.select('reducer', 'trackingInfo').pipe(tap((x) => {
       x && this.actualizarDatosPorPagina();
       x && (this.tamanoDatos = x.length); }));
-    
+
     this.inputSearch.valueChanges
     .pipe(
       debounceTime(600),
       distinctUntilChanged(),
       takeUntil(this.spiaDestroyed()),
-      map((x)=> x.target.value)
+      map((x) => x.target.value)
       )
     .subscribe((x: string) => {
       this.store.dispatch({type: filter, payload:  x});
@@ -55,9 +55,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   addNewItem(){
-    var a : ITrackingInfo = {date: new Date(), departure: "NEW, TX, 33619", arrival: "NEW, GA, 40123", price: 150, amount: 1, status: false};
+    const a: ITrackingInfo = {date: new Date(), departure: 'NEW, TX, 33619', arrival: 'NEW, GA, 40123', price: 150, amount: 1, status: false};
     this.store.dispatch({type: addNewItem, payload: a});
-    alert("New registration added, there is no budget for luxuries (╥_╥)");
+    alert('New registration added, there is no budget for luxuries (╥_╥)');
   }
 
   cambiarPagina($event: PageEvent) {

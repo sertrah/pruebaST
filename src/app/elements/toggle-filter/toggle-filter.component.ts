@@ -16,10 +16,10 @@ import { MatSlideToggleChange } from '@angular/material';
   ]
 })
 export class ToggleFilterComponent extends BaseControlValueAccessor<boolean> {
-  imgFormated: string
+  imgFormated: string;
   @Input() set image(img){
-    this.imgFormated=  `../assets/${img}.png`;
- };
+    this.imgFormated =  `../assets/${img}.png`;
+ }
 
  toggle(event: MatSlideToggleChange){
   this.onChange(event.checked);
